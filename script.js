@@ -3,11 +3,19 @@ async function buscarEndereco(cep)
     try {
         const consultarCep = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
         const consultarCepConvertida = await consultarCep.json();
-        console.log(consultarCepConvertida)
 
         if (consultarCepConvertida.erro) {
             throw Error('CEP não existente.');
         }
+
+        let cidade = document.getElementById('cidade');
+        let logradouro = document.getElementById('endereco');
+        let estado = document.getElementById('estado');
+
+        cidade.value = consultarCepConvertida.localidade;
+        logradouro.value = consultarCepConvertida.logradouro;
+        estado.value = consultarCepConvertida.uf;
+
     } catch (error) {
         console.log(error);        
     }
